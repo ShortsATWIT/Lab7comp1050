@@ -1,0 +1,42 @@
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+public class LA7_P2 extends Application {
+    private static final double MYWIDTH = 400;
+    private static final double MYHEIGHT = 400;
+    private static final double LIMITMYHEIGHT = (MYHEIGHT / 2);
+    private static double[] mypercent = new double[] { 0.35, 0.30, 0.30, 0.05 };
+    private static String[] title = new String[] {
+            "Project -- " + String.format("%d%s", (int) (100 * mypercent[0]), "%"),
+            "Exams -- " + String.format("%d%s", (int) (100 * mypercent[1]), "%"),
+            "Assignments -- " + String.format("%d%s", (int) (100 * mypercent[2]), "%"),
+            "Attendance -- " + String.format("%d%s", (int) (100 * mypercent[3]), "%") };
+    private static Color[] mycolors = new Color[] { Color.BLUE, Color.GREEN, Color.RED, Color.ORANGE };
+
+    @Override
+    public void start(Stage primaryStage) {
+        Pane mypane = new Pane();
+        mypane.setPadding(new Insets(5, 10, 0, 10));
+        Rectangle[] mybars = new Rectangle[4];
+        for (int inc = 0; inc < mybars.length; inc++) {
+            mybars[inc] = new Rectangle(5 + (100 * inc), LIMITMYHEIGHT - (MYHEIGHT * mypercent[inc]),
+                    MYWIDTH / mybars.length - 5, MYHEIGHT * mypercent[inc]);
+            mybars[inc].setFill(mycolors[inc]);
+            Text mytext = new Text(5 + (100 * inc), LIMITMYHEIGHT - (MYHEIGHT * mypercent[inc]) - 5, title[inc]);
+            mypane.getChildren().addAll(mytext, mybars[inc]);
+        }
+        primaryStage.setScene(new Scene(mypane, MYWIDTH + 20, LIMITMYHEIGHT));
+        primaryStage.setTitle("Bar graph");
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
